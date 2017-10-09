@@ -19,8 +19,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>861</width>
-      <height>611</height>
+      <width>941</width>
+      <height>651</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -60,11 +60,7 @@
       </layout>
      </item>
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QWidget" name="folderPie" native="true"/>
-       </item>
-      </layout>
+      <layout class="QVBoxLayout" name="chartsLayout"/>
      </item>
     </layout>
    </widget>
