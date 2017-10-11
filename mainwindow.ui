@@ -48,7 +48,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QListWidget" name="folderList"/>
+        <widget class="QTreeView" name="DirTreeView"/>
        </item>
        <item>
         <widget class="QLabel" name="lblStatus">
