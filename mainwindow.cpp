@@ -1,35 +1,18 @@
 #include "mainwindow.h"
+#include "directorypie.h"
 #include "ui_mainwindow.h"
-#include <QtCharts/QChartView>
-#include <QtCharts/QPieSeries>
-#include <QtCharts/QPieSlice>
 #include <QFileSystemModel>
-QT_CHARTS_USE_NAMESPACE
+
+
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
 
     ui->setupUi(this);
-
-
-
-    QPieSeries *series = new QPieSeries();
-    series->append("Jane", 1);
-    series->append("Joe", 2);
-    series->append("Andy", 3);
-    series->append("Barbara", 4);
-    series->append("Axel", 5);
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Simple piechart example");
-    chart->legend()->hide();
-
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    ui->chartsLayout->addWidget(chartView);
-
-
+    static DirectoryPie *pie = new DirectoryPie(0.5, 10);
+    ui->chartsLayout->addWidget(pie);
 
 }
 
@@ -43,8 +26,7 @@ void MainWindow::on_btnBrowse_clicked()
     path = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                              ".", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     ui->txtPath->setText(path);
-    //    ui->DirTreeView->clear();
-    //ui->DirTreeView->setSortingEnabled(true);
+
     watcher = new QFileSystemWatcher(this);
     watcher->addPath(path);
 
@@ -59,13 +41,9 @@ void MainWindow::on_btnBrowse_clicked()
     ui->DirTreeView->setModel(modelTree);
     ui->DirTreeView->setRootIndex(idx);
 
-//    QFileInfoList list =dir.entryInfoList();
-//    ui->DirTreeView->addItems(list);
-//    for(int i=0; i<list.size();++i){
-//        ui->DirTreeView->addItem(list.at(i).fileName());
-//    }
-     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(NotifyChanges(QString)));
-     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(NotifyChanges(QString)));
+    connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(NotifyChanges(QString)));
+    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(NotifyChanges(QString)));
+
 }
 
 void MainWindow::NotifyChanges(const QString &path)
