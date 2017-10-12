@@ -8,7 +8,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QFileSystemWatcher>
-
+#include "directorypie.h"
 
 
 namespace Ui {
@@ -31,6 +31,7 @@ private:
     Ui::MainWindow *ui;
     QFileSystemWatcher *watcher;
     QString path;
+    DirectoryPie *pie;
 };
 
 #endif // MAINWINDOW_H

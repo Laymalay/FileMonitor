@@ -9,9 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
     ui->setupUi(this);
-    static DirectoryPie *pie = new DirectoryPie(0.5, 10);
+    pie = new DirectoryPie(0.5);
     ui->chartsLayout->addWidget(pie);
 
 }
@@ -43,6 +42,8 @@ void MainWindow::on_btnBrowse_clicked()
 
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(NotifyChanges(QString)));
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(NotifyChanges(QString)));
+
+    pie->updatePie(0.1);
 
 }
 

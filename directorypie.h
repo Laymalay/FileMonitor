@@ -11,12 +11,12 @@ class DirectoryPie: public QChartView
     Q_OBJECT
 
 public:
-     DirectoryPie(float p = 0.2, int p2 = 10 , QChartView *parent = 0);
+     DirectoryPie(float hole_size = 0.5, QChartView *parent = 0);
+     void updatePie(float hole_size);
     ~DirectoryPie();
-     float p;
 private:
-
-
+    QPieSeries *series;
+    QChart *chart;
 
 
 };

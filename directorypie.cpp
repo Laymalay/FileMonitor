@@ -1,10 +1,9 @@
 #include "directorypie.h"
 
-DirectoryPie::DirectoryPie(float p1, int p2, QChartView *parent): QChartView(parent)
+DirectoryPie::DirectoryPie(float hole_size, QChartView *parent): QChartView(parent)
 {
-    p = p1;
-    QPieSeries *series = new QPieSeries();
-    series->setHoleSize(p);
+    this->series = new QPieSeries();
+    series->setHoleSize(hole_size);
     series->append("Jane", 1);
     series->append("Joe", 2);
     series->append("Andy", 3);
@@ -14,7 +13,7 @@ DirectoryPie::DirectoryPie(float p1, int p2, QChartView *parent): QChartView(par
 //     QPieSlice *slice = series->append("Fat 15.6%", 15.6);
 //         slice->setExploded();
 //         slice->setLabelVisible();
-    QChart *chart = new QChart();
+    this->chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple piechart example");
     chart->legend()->hide();
@@ -23,12 +22,18 @@ DirectoryPie::DirectoryPie(float p1, int p2, QChartView *parent): QChartView(par
     //chartView->setRenderHint(QPainter::Antialiasing);
     //chartView->chart()->setTheme(QChart::ChartThemeDark);
     this->setRenderHint(QPainter::Antialiasing);
-    this->chart()->setTheme(QChart::ChartThemeDark);
+    this->chart->setTheme(QChart::ChartThemeDark);
 
 }
 
 DirectoryPie::~DirectoryPie()
 {
+
+}
+
+void DirectoryPie::updatePie(float hole_size)
+{
+    this->series->setHoleSize(hole_size);
 
 }
 
