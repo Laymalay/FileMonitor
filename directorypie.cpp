@@ -4,11 +4,11 @@ DirectoryPie::DirectoryPie(float hole_size, QChartView *parent): QChartView(pare
 {
     this->series = new QPieSeries();
     series->setHoleSize(hole_size);
-    series->append("Jane", 1);
-    series->append("Joe", 2);
-    series->append("Andy", 3);
-    series->append("Barbara", 4);
-    series->append("Axel", 5);
+    series->append("Jane", 20);
+    series->append("Joe", 20);
+    series->append("Andy", 20);
+    series->append("Barbara", 10);
+    series->append("Axel", 30);
 //!!!EXPLODED THE CLICKED SECTOR!!!
 //     QPieSlice *slice = series->append("Fat 15.6%", 15.6);
 //         slice->setExploded();
@@ -22,7 +22,8 @@ DirectoryPie::DirectoryPie(float hole_size, QChartView *parent): QChartView(pare
     //chartView->setRenderHint(QPainter::Antialiasing);
     //chartView->chart()->setTheme(QChart::ChartThemeDark);
     this->setRenderHint(QPainter::Antialiasing);
-    this->chart->setTheme(QChart::ChartThemeDark);
+    chart->setTheme(QChart::ChartThemeDark);
+    chart->setAnimationOptions(QChart::AllAnimations);
 
 }
 
