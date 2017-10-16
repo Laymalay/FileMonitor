@@ -25,7 +25,7 @@ public:
 
 private slots:
     void on_btnBrowse_clicked();
-    void NotifyChanges(const QString &path);
+    //void NotifyChanges(const QString &path);
 
 private:
     Ui::MainWindow *ui;
