@@ -92,9 +92,9 @@ void MainWindow::on_btnBrowse_clicked()
 
 
 
-//void MainWindow::NotifyChanges(const QString &path)
-//{
-//    qDebug() << "Signal Reseved!";
+void MainWindow::NotifyChanges(const QString &path)
+{
+    qDebug() << "Signal Reseved!";
 ////    QStringList oldList, newList;
 ////    for(int i=0; i<ui->DirTreeView->count();i++){
 ////        QListWidgetItem *item =  ui->DirTreeView->item(i);
@@ -143,4 +143,4 @@ void MainWindow::on_btnBrowse_clicked()
 //    //add file sizes
 //    //add settings
 //    //add save program state
-//}
+}

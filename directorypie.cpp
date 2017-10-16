@@ -41,14 +41,16 @@ qint64 DirectoryPie::dirSize(QString dirPath)
     qint64 totalSize = 0;
     QDir dir(dirPath);
     QFileInfoList fileInfoList = dir.entryInfoList();
-    qDebug ()<< dirPath;
-    for (int i=2; i < fileInfoList.size(); i++){
 
-        if (fileInfoList.at(i).isDir()){
-            totalSize+=this->dirSize(fileInfoList.at(i).absoluteFilePath());
-        }
-         else {
-         totalSize+=fileInfoList.at(i).size();
+    for (int i=0; i < fileInfoList.size(); i++){
+        if (fileInfoList.at(i).baseName() != ""){
+            qDebug()<< fileInfoList.at(i).baseName();
+            if (fileInfoList.at(i).isDir()){
+                totalSize+=this->dirSize(fileInfoList.at(i).absoluteFilePath());
+            }
+             else {
+             totalSize+=fileInfoList.at(i).size();
+            }
         }
     }
     return totalSize;
