@@ -16,6 +16,7 @@ public:
      DirectoryPie(QChartView *parent = 0);
      void updatePie(QFileInfoList fileInfoList, QString directoryName);
      qint64 dirSize(QString dirPath);
+     QString sizeHuman(qint64 size);
     ~DirectoryPie();
 private:
     QPieSeries *series;

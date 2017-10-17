@@ -24,16 +24,28 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
 {
     this->series = new QPieSeries();
     series->setHoleSize(0.3);
+
+
     for (int i=0; i < fileInfoList.size(); i++){
       qint64 size = 0;
       fileInfoList.at(i).isDir()?
       size = this->dirSize(fileInfoList.at(i).absoluteFilePath()):
       size = fileInfoList.at(i).size();
-      qDebug ()<< "pie"+QString::number(size);
-      series->append(fileInfoList.at(i).fileName(), size);
+      //series->append(fileInfoList.at(i).fileName(), size);
+      series->append(sizeHuman(size), size);
     }
+
+    for(auto slice : series->slices())
+        if (100*slice->percentage()>2.5)
+        {
+            slice->setLabelPosition(QPieSlice::LabelInsideNormal);
+            slice->setLabelVisible();
+        }
+
     this->chart->addSeries(series);
     chart->setTitle(directoryName);
+    chart->legend()->hide();
+
 }
 
 qint64 DirectoryPie::dirSize(QString dirPath)
@@ -43,8 +55,8 @@ qint64 DirectoryPie::dirSize(QString dirPath)
     QFileInfoList fileInfoList = dir.entryInfoList();
 
     for (int i=0; i < fileInfoList.size(); i++){
-        if (fileInfoList.at(i).baseName() != ""){
-            qDebug()<< fileInfoList.at(i).baseName();
+            qDebug()<< fileInfoList.at(i).fileName();
+            if (fileInfoList.at(i).fileName()!="."&&fileInfoList.at(i).fileName()!=".."){
             if (fileInfoList.at(i).isDir()){
                 totalSize+=this->dirSize(fileInfoList.at(i).absoluteFilePath());
             }
@@ -54,6 +66,22 @@ qint64 DirectoryPie::dirSize(QString dirPath)
         }
     }
     return totalSize;
+}
+QString DirectoryPie::sizeHuman(qint64 size)
+{
+    float num = size;
+    QStringList list;
+    list << "KB" << "MB" << "GB" << "TB";
+
+    QStringListIterator i(list);
+    QString unit("bytes");
+
+    while(num >= 1024.0 && i.hasNext())
+     {
+        unit = i.next();
+        num /= 1024.0;
+    }
+    return QString().setNum(num,'f',2)+" "+unit;
 }
 
 DirectoryPie::~DirectoryPie()

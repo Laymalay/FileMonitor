@@ -11,9 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     pie = new DirectoryPie();
-    pie->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    ui->horizontalLayout_3->addWidget(pie);
-
+//    pie->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->charts->addWidget(pie);
+    this->setCentralWidget(ui->splitter);
 
 }
 
@@ -56,23 +56,12 @@ void MainWindow::on_btnBrowse_clicked()
 //    }
 //==============================================================
 
-
-
-
-
-
     ui->DirTreeView->setModel(modelTree);
     ui->DirTreeView->setRootIndex(idx);
 
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(NotifyChanges(QString)));
     connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(NotifyChanges(QString)));
     QFileInfoList fileInfoList= dir.entryInfoList();
-    for (int i = 0; i < fileInfoList.size(); i++)
-    {
-        qDebug() << "Filename " + QString::number(i) + " = " + fileInfoList.at(i).filePath()
-                    + QString::number(fileInfoList.at(i).size()) + "sgfws"+fileInfoList.at(i).isDir();
-    }
-
     pie->updatePie(fileInfoList, dir.dirName());
 }
 
