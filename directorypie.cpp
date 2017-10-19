@@ -4,19 +4,9 @@ DirectoryPie::DirectoryPie(QChartView *parent): QChartView(parent)
 {
     this->series = new QPieSeries();
     series->setHoleSize(0.6);
-//!!!EXPLODED THE CLICKED SECTOR!!!
-//     QPieSlice *slice = series->append("Fat 15.6%", 15.6);
-//         slice->setExploded();
-//         slice->setLabelVisible();
     this->chart = new QChart();
-    chart->addSeries(series);
-    chart->legend()->hide();
     this->setChart(chart);
-    this->setRenderHint(QPainter::Antialiasing);
-    chart->setTheme(QChart::ChartThemeDark);
     chart->setBackgroundVisible(false);
-    chart->setAnimationOptions(QChart::AllAnimations);
-
 }
 
 
@@ -25,15 +15,29 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
 {
     this->series = new QPieSeries();
     series->setHoleSize(0.3);
-
-
+    QColor *color = new QColor();
+    listOfColors = new QMap<QString,QColor>;
+    int x = rand() % 255;
+    int y = rand() % 255;
+    int z = rand() % 255;
+    int xx=0,yy=0,zz=0;
     for (int i=0; i < fileInfoList.size(); i++){
       qint64 size = 0;
       size = getFileSize(fileInfoList.at(i).absoluteFilePath());
-      //series->append(fileInfoList.at(i).fileName(), size);
       QPieSlice *slice = new QPieSlice(fileInfoList.at(i).fileName(), size);
-      //sizeHuman(size);
+
+      if(x<255) xx=x+(i*10)%255;
+      if(y<255) yy=y+(i*40)%255;
+      if(z<255) zz=z+(i*60)%255;
+      if(xx>255) xx=255;
+      if(yy>255) yy=255;
+      if(zz>255) zz=255;
+
       series->append(slice);
+      color->setRgb(xx,yy,zz);
+      slice->setColor(*color);
+      slice->setLabelColor(Qt::white);
+      listOfColors->insert(fileInfoList.at(i).fileName(),*color);
       connect(slice,SIGNAL(hovered(bool)),this,SLOT(PieSliceHovered(bool)));
     }
 
@@ -42,16 +46,15 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
         {
             slice->setLabelPosition(QPieSlice::LabelInsideNormal);
             slice->setLabelVisible();
+
         }
     this->chart = new QChart();
     chart->addSeries(series);
     chart->legend()->hide();
     this->setChart(chart);
     this->setRenderHint(QPainter::Antialiasing);
-    chart->setTheme(QChart::ChartThemeDark);
     chart->setBackgroundVisible(false);
     chart->setAnimationOptions(QChart::AllAnimations);
-
 
 //    this->chart->addSeries(series);
     chart->setTitle(directoryName);
@@ -77,7 +80,6 @@ qint64 DirectoryPie::dirSize(QString dirPath)
     QFileInfoList fileInfoList = dir.entryInfoList();
 
     for (int i=0; i < fileInfoList.size(); i++){
-            qDebug()<< fileInfoList.at(i).fileName();
             if (fileInfoList.at(i).fileName()!="."&&fileInfoList.at(i).fileName()!=".."){
             if (fileInfoList.at(i).isDir()){
                 totalSize+=dirSize(fileInfoList.at(i).absoluteFilePath());
@@ -112,9 +114,20 @@ DirectoryPie::~DirectoryPie()
 
 void DirectoryPie::PieSliceHovered(bool hovered)
 {
-    QPieSlice* ptr = ((QPieSlice*)sender());
-    ptr->setExploded(hovered);
-    emit ShowFileInfoSignal(hovered, ptr->label());
+    QPieSlice* slice = ((QPieSlice*)sender());
+    slice->setExploded(hovered);
+    QColor hoveredColor,oldColor;
+    qDebug()<<hovered;
+    qDebug()<<slice->label();
+    oldColor = listOfColors->value(slice->label());
+    qDebug()<<hovered;
+    qDebug()<<oldColor;
+    qDebug()<<slice->label();
+    qDebug()<<"-----------------------------";
+    hoveredColor = Qt::white;
+    hovered?slice->setColor(hoveredColor):slice->setColor(oldColor);
+    hovered?slice->setLabelColor(Qt::black):slice->setLabelColor(Qt::white);
+    emit ShowFileInfoSignal(hovered, slice->label());
 }
 
 

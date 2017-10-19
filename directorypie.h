@@ -22,6 +22,7 @@ public:
 private:
     QPieSeries *series;
     QChart *chart;
+    QMap<QString,QColor> *listOfColors;
 
 private slots:
      void PieSliceHovered(bool hovered);

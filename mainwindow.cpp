@@ -12,16 +12,19 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     pie = new DirectoryPie();
     pie->setStyleSheet("background:transparent;");
+
 //    pie->setAlignment(Qt::AlignTop);
 //    pie->backgroundBrush().setColor(Qt::transparent);
 //    pie->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     ui->charts->addWidget(pie);
+    QColor *color = new QColor();
+    color->setRgb((rand() % 255),(rand() % 255),(rand() % 255));
     this->setCentralWidget(ui->splitter);
     ui->DirTreeView->setStyleSheet(
                 "QHeaderView::section{ background-color: rgba(137, 137, 137, 33);\
                                         color:white}"
                 "QTreeView{color:white}");
-
+                //"QTreeView::item{ selection-background-color:black;selection-color: white; }");
 }
 
 MainWindow::~MainWindow()
@@ -172,7 +175,6 @@ void MainWindow::ShowFileInfo(bool hovered, QString fileName)
 
     QString absPath = path + "/" +fileName;
     QFileInfo fileInfo(absPath);
-    qDebug()<<fileInfo.absoluteFilePath();
     ui->fileInfo->setText(fileName +"\n" + DirectoryPie::sizeHuman(DirectoryPie::getFileSize(absPath)));
 
 }
