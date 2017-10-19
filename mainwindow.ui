@@ -53,8 +53,8 @@ background : qlineargradient(spread:pad, x1:0.511726, y1:0, x2:0.512, y2:1, stop
    </property>
    <property name="maximumSize">
     <size>
-     <width>943</width>
-     <height>631</height>
+     <width>1000</width>
+     <height>1000</height>
     </size>
    </property>
    <property name="autoFillBackground">
