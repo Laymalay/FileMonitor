@@ -46,10 +46,19 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
             slice->setLabelPosition(QPieSlice::LabelInsideNormal);
             slice->setLabelVisible();
         }
-
-    this->chart->addSeries(series);
-    chart->setTitle(directoryName);
+    this->chart = new QChart();
+    chart->addSeries(series);
     chart->legend()->hide();
+    this->setChart(chart);
+    this->setRenderHint(QPainter::Antialiasing);
+    chart->setTheme(QChart::ChartThemeDark);
+    chart->setBackgroundVisible(false);
+    chart->setAnimationOptions(QChart::AllAnimations);
+
+
+//    this->chart->addSeries(series);
+    chart->setTitle(directoryName);
+//    chart->legend()->hide();
 
 }
 
