@@ -15,15 +15,18 @@ class DirectoryPie: public QChartView
 public:
      DirectoryPie(QChartView *parent = 0);
      void updatePie(QFileInfoList fileInfoList, QString directoryName);
-     qint64 dirSize(QString dirPath);
-     QString sizeHuman(qint64 size);
+     static qint64 dirSize(QString dirPath);
+     static QString sizeHuman(qint64 size);
+     static qint64 getFileSize(QString absPath);
     ~DirectoryPie();
 private:
     QPieSeries *series;
     QChart *chart;
 
 private slots:
-     void PieSliceHovered(bool tmp);
+     void PieSliceHovered(bool hovered);
+signals:
+     void ShowFileInfoSignal(bool hovered, QString fileName);
 };
 
 #endif // DIRECTORYPIE_H

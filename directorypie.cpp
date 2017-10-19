@@ -29,15 +29,12 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
 
     for (int i=0; i < fileInfoList.size(); i++){
       qint64 size = 0;
-      fileInfoList.at(i).isDir()?
-      size = this->dirSize(fileInfoList.at(i).absoluteFilePath()):
-      size = fileInfoList.at(i).size();
+      size = getFileSize(fileInfoList.at(i).absoluteFilePath());
       //series->append(fileInfoList.at(i).fileName(), size);
-      QPieSlice *slice = new QPieSlice(sizeHuman(size), size);
+      QPieSlice *slice = new QPieSlice(fileInfoList.at(i).fileName(), size);
+      //sizeHuman(size);
       series->append(slice);
       connect(slice,SIGNAL(hovered(bool)),this,SLOT(PieSliceHovered(bool)));
-
-
     }
 
     for(auto slice : series->slices())
@@ -62,6 +59,17 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
 
 }
 
+qint64 DirectoryPie::getFileSize(QString filePath){
+    QFileInfo fileInfo(filePath);
+    if (fileInfo.isFile()){
+        return fileInfo.size();
+    }
+    else
+    {
+        return DirectoryPie::dirSize(filePath);
+    }
+}
+
 qint64 DirectoryPie::dirSize(QString dirPath)
 {
     qint64 totalSize = 0;
@@ -72,7 +80,7 @@ qint64 DirectoryPie::dirSize(QString dirPath)
             qDebug()<< fileInfoList.at(i).fileName();
             if (fileInfoList.at(i).fileName()!="."&&fileInfoList.at(i).fileName()!=".."){
             if (fileInfoList.at(i).isDir()){
-                totalSize+=this->dirSize(fileInfoList.at(i).absoluteFilePath());
+                totalSize+=dirSize(fileInfoList.at(i).absoluteFilePath());
             }
              else {
              totalSize+=fileInfoList.at(i).size();
@@ -102,10 +110,11 @@ DirectoryPie::~DirectoryPie()
 {
 }
 
-void DirectoryPie::PieSliceHovered(bool tmp)
+void DirectoryPie::PieSliceHovered(bool hovered)
 {
     QPieSlice* ptr = ((QPieSlice*)sender());
-    ptr->setExploded(tmp);
+    ptr->setExploded(hovered);
+    emit ShowFileInfoSignal(hovered, ptr->label());
 }
 
 

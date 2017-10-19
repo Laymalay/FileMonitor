@@ -76,7 +76,7 @@ qradialgradient (spread:repeat, cx:0.5, cy:0.5, radius:0.077, fx:0.5, fy:0.5, st
    <widget class="QSplitter" name="splitter">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>-60</x>
       <y>0</y>
       <width>931</width>
       <height>631</height>
@@ -102,27 +102,63 @@ qradialgradient (spread:repeat, cx:0.5, cy:0.5, radius:0.077, fx:0.5, fy:0.5, st
     </property>
     <widget class="QWidget" name="verticalLayoutWidget">
      <layout class="QVBoxLayout" name="leftPart">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <property name="leftMargin">
+       <number>10</number>
+      </property>
+      <property name="topMargin">
+       <number>10</number>
+      </property>
+      <property name="rightMargin">
+       <number>10</number>
+      </property>
+      <property name="bottomMargin">
+       <number>10</number>
+      </property>
       <item>
        <layout class="QHBoxLayout" name="browseLayout">
+        <property name="spacing">
+         <number>10</number>
+        </property>
         <property name="sizeConstraint">
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
         </property>
         <item>
          <widget class="QLineEdit" name="txtPath">
           <property name="styleSheet">
            <string notr="true">color:white;
-background:rgb(46, 52, 54);</string>
+background:rgba(137, 137, 137, 33);</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="btnBrowse">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="styleSheet">
            <string notr="true">color:white;
-background:rgb(46, 52, 54);</string>
+background:rgba(137, 137, 137, 33);</string>
           </property>
           <property name="text">
            <string>Browse</string>
@@ -141,8 +177,18 @@ background:rgb(46, 52, 54);</string>
         </property>
         <property name="styleSheet">
          <string notr="true">color:white;
-background:rgb(46, 52, 54);</string>
+background:rgba(137, 137, 137, 33);
+</string>
         </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="animated">
+         <bool>true</bool>
+        </property>
+        <attribute name="headerCascadingSectionResizes">
+         <bool>true</bool>
+        </attribute>
        </widget>
       </item>
      </layout>
@@ -155,6 +201,21 @@ background:rgb(46, 52, 54);</string>
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
+      <item>
+       <widget class="QLabel" name="fileInfo">
+        <property name="styleSheet">
+         <string notr="true">font: 25pt ;
+color: white;
+background: transparent;</string>
+        </property>
+        <property name="text">
+         <string>fileInfo</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </widget>
