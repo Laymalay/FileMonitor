@@ -131,5 +131,30 @@ void MainWindow::NotifyChanges(const QString &path)
 //    //TODO: add update function after file modifieded
 //    //add file sizes
 //    //add settings
-//    //add save program state
+    //    //add save program state
+}
+
+void MainWindow::onSliceClicked(QString path)
+{
+    ui->txtPath->setText(path);
+
+    watcher = new QFileSystemWatcher(this);
+    watcher->addPath(path);
+
+    disconnect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(NotifyChanges(QString)));
+    QDir dir(path);
+    dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+    dir.setSorting(QDir::Size | QDir::Reversed);
+
+    QFileSystemModel* modelTree = new QFileSystemModel(this);
+    modelTree->setRootPath(path);
+    QModelIndex idx = modelTree->index(path);
+
+    ui->DirTreeView->setModel(modelTree);
+    ui->DirTreeView->setRootIndex(idx);
+
+    connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(NotifyChanges(QString)));
+    connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(NotifyChanges(QString)));
+    QFileInfoList fileInfoList= dir.entryInfoList();
+    pie->updatePie(fileInfoList, dir.dirName());
 }

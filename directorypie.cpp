@@ -1,5 +1,5 @@
 #include "directorypie.h"
-
+#include "mainwindow.h"
 DirectoryPie::DirectoryPie(QChartView *parent): QChartView(parent)
 {
     this->series = new QPieSeries();
@@ -16,6 +16,7 @@ DirectoryPie::DirectoryPie(QChartView *parent): QChartView(parent)
     chart->setTheme(QChart::ChartThemeDark);
     chart->setBackgroundVisible(false);
     chart->setAnimationOptions(QChart::AllAnimations);
+
 }
 
 
@@ -32,7 +33,11 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
       size = this->dirSize(fileInfoList.at(i).absoluteFilePath()):
       size = fileInfoList.at(i).size();
       //series->append(fileInfoList.at(i).fileName(), size);
-      series->append(sizeHuman(size), size);
+      QPieSlice *slice = new QPieSlice(sizeHuman(size), size);
+      series->append(slice);
+      connect(slice,SIGNAL(hovered(bool)),this,SLOT(PieSliceHovered(bool)));
+
+
     }
 
     for(auto slice : series->slices())
@@ -86,6 +91,12 @@ QString DirectoryPie::sizeHuman(qint64 size)
 
 DirectoryPie::~DirectoryPie()
 {
+}
+
+void DirectoryPie::PieSliceHovered(bool tmp)
+{
+    QPieSlice* ptr = ((QPieSlice*)sender());
+    ptr->setExploded(tmp);
 }
 
 

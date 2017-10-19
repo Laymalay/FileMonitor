@@ -22,6 +22,8 @@ private:
     QPieSeries *series;
     QChart *chart;
 
+private slots:
+     void PieSliceHovered(bool tmp);
 };
 
 #endif // DIRECTORYPIE_H

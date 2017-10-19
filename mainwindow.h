@@ -26,6 +26,7 @@ public:
 private slots:
     void on_btnBrowse_clicked();
     void NotifyChanges(const QString &path);
+    void onSliceClicked(QString path);
 
 private:
     Ui::MainWindow *ui;

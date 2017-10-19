@@ -90,8 +90,8 @@ qradialgradient (spread:repeat, cx:0.5, cy:0.5, radius:0.077, fx:0.5, fy:0.5, st
     </property>
     <property name="maximumSize">
      <size>
-      <width>2560</width>
-      <height>1600</height>
+      <width>16777215</width>
+      <height>16777215</height>
      </size>
     </property>
     <property name="midLineWidth">
@@ -125,7 +125,7 @@ background:rgb(46, 52, 54);</string>
 background:rgb(46, 52, 54);</string>
           </property>
           <property name="text">
-           <string>PushButton</string>
+           <string>Browse</string>
           </property>
          </widget>
         </item>
