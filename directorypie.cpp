@@ -25,20 +25,16 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
       qint64 size = 0;
       size = getFileSize(fileInfoList.at(i).absoluteFilePath());
       QPieSlice *slice = new QPieSlice(fileInfoList.at(i).fileName(), size);
-
-      if(x<255) xx=x+(i*10)%255;
-      if(y<255) yy=y+(i*40)%255;
-      if(z<255) zz=z+(i*60)%255;
-      if(xx>255) xx=255;
-      if(yy>255) yy=255;
-      if(zz>255) zz=255;
-
+      if(x<255) xx=(x+(i*10)%150)%255;
+      if(y<255) yy=(y+(i*20)%150)%255;
+      if(z<255) zz=(z+(i*30)%150)%255;
       series->append(slice);
       color->setRgb(xx,yy,zz);
       slice->setColor(*color);
       slice->setLabelColor(Qt::white);
       listOfColors->insert(fileInfoList.at(i).fileName(),*color);
-      connect(slice,SIGNAL(hovered(bool)),this,SLOT(PieSliceHovered(bool)));
+      connect(slice,SIGNAL(hovered(bool)),this, SLOT(PieSliceHovered(bool)));
+      connect(slice,SIGNAL(clicked()),this, SLOT(onSliceClicked()));
     }
 
     for(auto slice : series->slices())
@@ -55,10 +51,7 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
     this->setRenderHint(QPainter::Antialiasing);
     chart->setBackgroundVisible(false);
     chart->setAnimationOptions(QChart::AllAnimations);
-
-//    this->chart->addSeries(series);
     chart->setTitle(directoryName);
-//    chart->legend()->hide();
 
 }
 
@@ -112,18 +105,19 @@ DirectoryPie::~DirectoryPie()
 {
 }
 
+void DirectoryPie::onSliceClicked()
+{
+    QPieSlice* slice = ((QPieSlice*)sender());
+    emit onSliceClickedSignal(slice->label());
+}
+
+
 void DirectoryPie::PieSliceHovered(bool hovered)
 {
     QPieSlice* slice = ((QPieSlice*)sender());
     slice->setExploded(hovered);
     QColor hoveredColor,oldColor;
-    qDebug()<<hovered;
-    qDebug()<<slice->label();
     oldColor = listOfColors->value(slice->label());
-    qDebug()<<hovered;
-    qDebug()<<oldColor;
-    qDebug()<<slice->label();
-    qDebug()<<"-----------------------------";
     hoveredColor = Qt::white;
     hovered?slice->setColor(hoveredColor):slice->setColor(oldColor);
     hovered?slice->setLabelColor(Qt::black):slice->setLabelColor(Qt::white);

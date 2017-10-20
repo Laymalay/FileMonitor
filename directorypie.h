@@ -25,9 +25,11 @@ private:
     QMap<QString,QColor> *listOfColors;
 
 private slots:
+     void onSliceClicked();
      void PieSliceHovered(bool hovered);
 signals:
      void ShowFileInfoSignal(bool hovered, QString fileName);
+     void onSliceClickedSignal(QString fileName);
 };
 
 #endif // DIRECTORYPIE_H

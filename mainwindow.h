@@ -25,13 +25,11 @@ public:
 
 private slots:
     void on_btnBrowse_clicked();
-    void NotifyChanges(const QString &path);
-    void onSliceClicked(QString path);
+    void onSliceClicked(QString fileName);
+    void updateWindow(QString path);
     void ShowFileInfo(bool hovered, QString fileName);
-
 private:
     Ui::MainWindow *ui;
-    QFileSystemWatcher *watcher;
     QString path;
     DirectoryPie *pie;
 };
