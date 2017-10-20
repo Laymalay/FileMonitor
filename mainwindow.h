@@ -28,10 +28,13 @@ private slots:
     void onSliceClicked(QString fileName);
     void updateWindow(QString path);
     void ShowFileInfo(bool hovered, QString fileName);
+    void on_btnback_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString path;
     DirectoryPie *pie;
+    QStack<QString> *pathStack;
 };
 
 #endif // MAINWINDOW_H

@@ -3,6 +3,7 @@
 #include <QtCharts/QPieSlice>
 #include <QFileSystemModel>
 #include <QDebug>
+#include <QStack>
 #ifndef DIRECTORYPIE_H
 #define DIRECTORYPIE_H
 QT_CHARTS_USE_NAMESPACE

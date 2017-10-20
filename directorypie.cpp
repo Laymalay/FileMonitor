@@ -1,5 +1,5 @@
 #include "directorypie.h"
-#include "mainwindow.h"
+
 DirectoryPie::DirectoryPie(QChartView *parent): QChartView(parent)
 {
     this->series = new QPieSeries();
@@ -15,8 +15,8 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
 {
     this->series = new QPieSeries();
     series->setHoleSize(0.3);
-    QColor *color = new QColor();
     listOfColors = new QMap<QString,QColor>;
+    QColor *color = new QColor();
     int x = rand() % 255;
     int y = rand() % 255;
     int z = rand() % 255;
@@ -25,16 +25,20 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
       qint64 size = 0;
       size = getFileSize(fileInfoList.at(i).absoluteFilePath());
       QPieSlice *slice = new QPieSlice(fileInfoList.at(i).fileName(), size);
-      if(x<255) xx=(x+(i*10)%150)%255;
-      if(y<255) yy=(y+(i*20)%150)%255;
-      if(z<255) zz=(z+(i*30)%150)%255;
-      series->append(slice);
+      xx=(x+(i*30)%150);
+      yy=(y+(i*30)%150);
+      zz=(z+(i*30)%150);
+      if(xx>255)xx=x;
+      if(yy>255)yy=y;
+      if(zz>255)zz=z;
+
       color->setRgb(xx,yy,zz);
       slice->setColor(*color);
-      slice->setLabelColor(Qt::white);
       listOfColors->insert(fileInfoList.at(i).fileName(),*color);
+      slice->setLabelColor(Qt::white);
       connect(slice,SIGNAL(hovered(bool)),this, SLOT(PieSliceHovered(bool)));
       connect(slice,SIGNAL(clicked()),this, SLOT(onSliceClicked()));
+      series->append(slice);
     }
 
     for(auto slice : series->slices())
@@ -50,6 +54,7 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
     this->setChart(chart);
     this->setRenderHint(QPainter::Antialiasing);
     chart->setBackgroundVisible(false);
+//    chart->setTheme(QChart::ChartThemeBlueCerulean);
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->setTitle(directoryName);
 

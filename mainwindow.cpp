@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
                 "QTreeView{color:white}");
     connect(pie,SIGNAL(onSliceClickedSignal(QString)),this,SLOT(onSliceClicked(QString)));
     connect(pie,SIGNAL(ShowFileInfoSignal(bool, QString)),this,SLOT(ShowFileInfo(bool, QString)));
+    pathStack = new QStack<QString>;
 }
 
 MainWindow::~MainWindow()
@@ -39,17 +40,18 @@ void MainWindow::on_btnBrowse_clicked()
 
 void MainWindow::onSliceClicked(QString fileName)
 {
-    qDebug()<< fileName;
-    path = path + "/" + fileName;
-    QFileInfo fileInfo(path);
-    if (fileInfo.isDir())
+    QString newPath = path + "/" + fileName;
+    QFileInfo fileInfo(newPath);
+    if (fileInfo.isDir()){
+        pathStack->push(path);
+        path = newPath;
         updateWindow(path);
+    }
 }
 
 void MainWindow::updateWindow(QString path)
 {
     ui->txtPath->setText(path);
-
     QDir dir(path);
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     dir.setSorting(QDir::Size | QDir::Reversed);
@@ -69,6 +71,19 @@ void MainWindow::ShowFileInfo(bool hovered, QString fileName)
 {
     QString absPath = path + "/" +fileName;
     QFileInfo fileInfo(absPath);
+
     ui->fileInfo->setText(fileName +"\n" + DirectoryPie::sizeHuman(DirectoryPie::getFileSize(absPath)));
+
+}
+
+
+
+
+void MainWindow::on_btnback_clicked()
+{
+    if (!pathStack->isEmpty()){
+        path = pathStack->pop();
+        updateWindow(path);
+    }
 
 }
