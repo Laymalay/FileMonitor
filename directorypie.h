@@ -24,6 +24,9 @@ private:
     QPieSeries *series;
     QChart *chart;
     QMap<QString,QColor> *listOfColors;
+    QColor getRandomColor();
+    QColor getNewTone(int i, QColor color);
+    void removeOldChart();
 
 private slots:
      void onSliceClicked();
