@@ -10,12 +10,23 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     pie = new DirectoryPie();
     pie->setStyleSheet("background:transparent;");
     ui->charts->addWidget(pie);
+
+
+    fileInfolbl = new QLabel();
+    fileInfolbl->setVisible(false);
+    fileInfolbl->setAlignment(Qt::AlignCenter);
+    fileInfolbl->setStyleSheet("background:transparent; color: white; font: 20px");
+    ui->charts->addWidget(fileInfolbl);
+
+
     QColor *color = new QColor();
     color->setRgb((rand() % 255),(rand() % 255),(rand() % 255));
     this->setCentralWidget(ui->splitter);
+
     ui->DirTreeView->setStyleSheet(
                 "QHeaderView::section{ background-color: rgba(137, 137, 137, 33);\
                                         color:white}"
@@ -71,8 +82,8 @@ void MainWindow::ShowFileInfo(bool hovered, QString fileName)
 {
     QString absPath = path + "/" +fileName;
     QFileInfo fileInfo(absPath);
-
-    ui->fileInfo->setText(fileName +"\n" + DirectoryPie::sizeHuman(DirectoryPie::getFileSize(absPath)));
+    fileInfolbl->setText(fileName +"\n" + DirectoryPie::sizeHuman(DirectoryPie::getFileSize(absPath)));
+    hovered?fileInfolbl->setVisible(true):fileInfolbl->setVisible(false);
 
 }
 

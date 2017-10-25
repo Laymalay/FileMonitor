@@ -25,6 +25,7 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
       qint64 size = 0;
       size = getFileSize(fileInfoList.at(i).absoluteFilePath());
       QPieSlice *slice = new QPieSlice(fileInfoList.at(i).fileName(), size);
+
       xx=(x+(i*30)%150);
       yy=(y+(i*30)%150);
       zz=(z+(i*30)%150);

@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QDebug>
+#include <QLabel>
 #include <QFileDialog>
 #include <QFileSystemWatcher>
 #include "directorypie.h"
@@ -34,6 +35,7 @@ private:
     Ui::MainWindow *ui;
     QString path;
     DirectoryPie *pie;
+    QLabel *fileInfolbl;
     QStack<QString> *pathStack;
 };
 

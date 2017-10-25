@@ -4,8 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += gui
 QT += charts
+CONFIG += qt
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = FSM
