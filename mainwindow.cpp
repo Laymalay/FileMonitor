@@ -82,7 +82,7 @@ void MainWindow::ShowFileInfo(bool hovered, QString fileName)
 {
     QString absPath = path + "/" +fileName;
     QFileInfo fileInfo(absPath);
-    fileInfolbl->setText(fileName +"\n" + DirectoryPie::sizeHuman(DirectoryPie::getFileSize(absPath)));
+    fileInfolbl->setText(fileName +"\n" + DirectoryPie::sizeHuman(pie->listOfFileSizes->value(fileName)));
     hovered?fileInfolbl->setVisible(true):fileInfolbl->setVisible(false);
 
 }

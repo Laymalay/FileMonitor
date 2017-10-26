@@ -19,6 +19,7 @@ public:
      static qint64 dirSize(QString dirPath);
      static QString sizeHuman(qint64 size);
      static qint64 getFileSize(QString absPath);
+     QMap<QString,qint64> *listOfFileSizes;
     ~DirectoryPie();
 private:
     QPieSeries *series;
@@ -26,7 +27,7 @@ private:
     QMap<QString,QColor> *listOfColors;
     QColor getRandomColor();
     QColor getNewTone(int i, QColor color);
-    void removeOldChart();
+    void clearChart();
 
 private slots:
      void onSliceClicked();

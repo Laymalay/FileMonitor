@@ -7,21 +7,20 @@ DirectoryPie::DirectoryPie(QChartView *parent): QChartView(parent)
     this->chart = new QChart();
     this->setChart(chart);
     this->listOfColors = new QMap<QString,QColor>;
+    this->listOfFileSizes = new QMap<QString,qint64>;
     chart->setBackgroundVisible(false);
 }
 
 void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
 {
-    removeOldChart();
-    listOfColors = new QMap<QString,QColor>;
-    series = new QPieSeries();
+    clearChart();
     series->setHoleSize(0.3);
     QColor newTone;
     QColor color = getRandomColor();
 
     for (int i=0; i < fileInfoList.size(); i++){
-      qint64 size = 0;
-      size = getFileSize(fileInfoList.at(i).absoluteFilePath());
+      qint64 size = getFileSize(fileInfoList.at(i).absoluteFilePath());
+      listOfFileSizes->insert(fileInfoList.at(i).fileName(), size);
       QPieSlice *slice = new QPieSlice(fileInfoList.at(i).fileName(), size);
       newTone = getNewTone(i, color);
       slice->setColor(newTone);
@@ -151,9 +150,9 @@ QColor DirectoryPie::getNewTone(int i, QColor color){
     return newTone;
 }
 
-void DirectoryPie::removeOldChart()
+void DirectoryPie::clearChart()
 {
-      chart->deleteLater();
-      series->deleteLater();
-      listOfColors->~QMap();
+      series->clear();
+      listOfColors->clear();
+      listOfFileSizes->clear();
 }
