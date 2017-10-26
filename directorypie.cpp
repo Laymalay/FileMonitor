@@ -100,6 +100,7 @@ DirectoryPie::~DirectoryPie()
     chart->deleteLater();
     series->deleteLater();
     listOfColors->~QMap();
+    listOfFileSizes->~QMap();
 }
 
 void DirectoryPie::onSliceClicked()
