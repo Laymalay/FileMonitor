@@ -16,20 +16,18 @@ class DirectoryPie: public QChartView
 public:
      DirectoryPie(QChartView *parent = 0);
      void updatePie(QFileInfoList fileInfoList, QString directoryName);
-     static qint64 dirSize(QString dirPath);
-     static QString sizeHuman(qint64 size);
-     static qint64 getFileSize(QString absPath);
      QMap<QString,qint64> *listOfFileSizes;
+     QMap<QString,QColor> *listOfColors;
+     static QColor getRandomColor();
     ~DirectoryPie();
 private:
     QPieSeries *series;
     QChart *chart;
-    QMap<QString,QColor> *listOfColors;
-    QColor getRandomColor();
-    QColor getNewTone(int i, QColor color);
     void clearChart();
+    QColor getNewTone(int i, QColor color);
 
 private slots:
+     void AddSlice(QString fileName, qint64 size, int i, QColor color);
      void onSliceClicked();
      void PieSliceHovered(bool hovered);
 signals:

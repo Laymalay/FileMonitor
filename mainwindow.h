@@ -37,6 +37,8 @@ private:
     DirectoryPie *pie;
     QLabel *fileInfolbl;
     QStack<QString> *pathStack;
+    QColor getRandomColor();
+    QColor getNewTone(int i, QColor color);
 };
 
 #endif // MAINWINDOW_H

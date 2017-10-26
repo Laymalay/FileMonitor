@@ -2,7 +2,7 @@
 #include "directorypie.h"
 #include "ui_mainwindow.h"
 #include <QFileSystemModel>
-
+#include "worker.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -82,7 +82,7 @@ void MainWindow::ShowFileInfo(bool hovered, QString fileName)
 {
     QString absPath = path + "/" +fileName;
     QFileInfo fileInfo(absPath);
-    fileInfolbl->setText(fileName +"\n" + DirectoryPie::sizeHuman(pie->listOfFileSizes->value(fileName)));
+    fileInfolbl->setText(fileName +"\n" + Worker::sizeHuman(pie->listOfFileSizes->value(fileName)));
     hovered?fileInfolbl->setVisible(true):fileInfolbl->setVisible(false);
 
 }
