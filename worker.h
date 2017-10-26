@@ -7,7 +7,7 @@
 class Worker : public QObject {
     Q_OBJECT
 public:
-    Worker(QFileInfoList fileInfoList, DirectoryPie *pie);
+    Worker(QFileInfoList fileInfoList);
     static QString sizeHuman(qint64 size);
     ~Worker();
 public slots:
@@ -17,7 +17,6 @@ signals:
     void finished();
 private:
     QFileInfoList _fileInfoList;
-    DirectoryPie *_pie;
     qint64 dirSize(QString dirPath);
     qint64 getFileSize(QString absPath);
 };

@@ -1,9 +1,8 @@
 #include "worker.h"
 #include "directorypie.h"
-Worker::Worker(QFileInfoList fileInfoList, DirectoryPie *pie)
+Worker::Worker(QFileInfoList fileInfoList)
 {
     _fileInfoList = fileInfoList;
-    _pie = pie;
 }
 
 Worker::~Worker()

@@ -15,6 +15,7 @@ DirectoryPie::DirectoryPie(QChartView *parent): QChartView(parent)
     chart->legend()->hide();
     this->setRenderHint(QPainter::Antialiasing);
     chart->setAnimationOptions(QChart::AllAnimations);
+    chart->setAnimationDuration(3000);
 }
 
 void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
@@ -22,7 +23,7 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
     clearChart();
     chart->setTitle(directoryName);
     QThread* thread = new QThread;
-    Worker* worker = new Worker(fileInfoList, this);
+    Worker* worker = new Worker(fileInfoList);
     worker->moveToThread(thread);
     connect(worker,SIGNAL(SliceIsReady(QString, qint64, int, QColor)),this,SLOT(AddSlice(QString, qint64, int, QColor)));
     connect(thread, SIGNAL (started()), worker, SLOT (process()));
