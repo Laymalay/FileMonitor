@@ -320,9 +320,9 @@ qradialgradient (spread:repeat, cx:0.5, cy:0.5, radius:0.077, fx:0.5, fy:0.5, st
    <widget class="QSplitter" name="splitter">
     <property name="geometry">
      <rect>
-      <x>-60</x>
+      <x>10</x>
       <y>0</y>
-      <width>931</width>
+      <width>930</width>
       <height>631</height>
      </rect>
     </property>

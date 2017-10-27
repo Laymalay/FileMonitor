@@ -11,10 +11,19 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+
+    dirSizelbl = new QLabel();
+    dirSizelbl->setAlignment(Qt::AlignCenter);
+    ui->charts->addWidget(dirSizelbl);
+    dirSizelbl->setStyleSheet("background:transparent; color: white; font: 20px");
+    dirSizelbl->setMinimumWidth(500);
+
+    QHBoxLayout* topLayout = new QHBoxLayout(dirSizelbl);
+    ui->charts->addLayout(topLayout);
+
     pie = new DirectoryPie();
     pie->setStyleSheet("background:transparent;");
-    ui->charts->addWidget(pie);
-
+    topLayout->addWidget(pie);
 
     fileInfolbl = new QLabel();
     fileInfolbl->setVisible(false);
@@ -76,6 +85,7 @@ void MainWindow::updateWindow(QString path)
 
     QFileInfoList fileInfoList= dir.entryInfoList();
     pie->updatePie(fileInfoList, dir.dirName());
+    dirSizelbl->setText(Worker::sizeHuman(Worker::dirSize(path)));
 }
 
 void MainWindow::ShowFileInfo(bool hovered, QString fileName)
@@ -84,7 +94,6 @@ void MainWindow::ShowFileInfo(bool hovered, QString fileName)
     QFileInfo fileInfo(absPath);
     fileInfolbl->setText(fileName +"\n" + Worker::sizeHuman(pie->listOfFileSizes->value(fileName)));
     hovered?fileInfolbl->setVisible(true):fileInfolbl->setVisible(false);
-
 }
 
 

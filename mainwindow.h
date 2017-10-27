@@ -35,7 +35,7 @@ private:
     Ui::MainWindow *ui;
     QString path;
     DirectoryPie *pie;
-    QLabel *fileInfolbl;
+    QLabel *fileInfolbl, *dirSizelbl ;
     QStack<QString> *pathStack;
     QColor getRandomColor();
     QColor getNewTone(int i, QColor color);
