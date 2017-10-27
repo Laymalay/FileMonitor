@@ -25,12 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
     pie->setStyleSheet("background:transparent;");
     topLayout->addWidget(pie);
 
-    fileInfolbl = new QLabel();
-    fileInfolbl->setVisible(false);
-    fileInfolbl->setAlignment(Qt::AlignCenter);
-    fileInfolbl->setStyleSheet("background:transparent; color: white; font: 20px");
-    ui->charts->addWidget(fileInfolbl);
-
 
     QColor *color = new QColor();
     color->setRgb((rand() % 255),(rand() % 255),(rand() % 255));
@@ -43,6 +37,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(pie,SIGNAL(onSliceClickedSignal(QString)),this,SLOT(onSliceClicked(QString)));
     connect(pie,SIGNAL(ShowFileInfoSignal(bool, QString)),this,SLOT(ShowFileInfo(bool, QString)));
     pathStack = new QStack<QString>;
+
+    fileInfolbl = new QLabel();
+    fileInfolbl->setVisible(false);
+    fileInfolbl->setAlignment(Qt::AlignCenter);
+    fileInfolbl->setStyleSheet("background:transparent; color: white; font: 20px");
+    fileInfolbl->setParent(this);
+    fileInfolbl->setGeometry(700,550,200,300);
+//    ui->charts->addWidget(fileInfolbl);
+    fileInfolbl->show();
 }
 
 MainWindow::~MainWindow()
