@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "directorypie.h"
 #include "ui_mainwindow.h"
-#include <QFileSystemModel>
 #include "worker.h"
 
 
@@ -10,20 +9,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    movie = new QMovie(":/gif/loading4.gif");
+    pie = new DirectoryPie();
+    pie->setStyleSheet("background:transparent;");
+    ui->charts->addWidget(pie);
 
 
     dirSizelbl = new QLabel();
     dirSizelbl->setAlignment(Qt::AlignCenter);
-    ui->charts->addWidget(dirSizelbl);
     dirSizelbl->setStyleSheet("background:transparent; color: white; font: 20px");
-    dirSizelbl->setMinimumWidth(500);
+    dirSizelbl->setMaximumSize(100,100);
 
-    QHBoxLayout* topLayout = new QHBoxLayout(dirSizelbl);
+
+    QHBoxLayout* topLayout = new QHBoxLayout(pie);
     ui->charts->addLayout(topLayout);
-
-    pie = new DirectoryPie();
-    pie->setStyleSheet("background:transparent;");
-    topLayout->addWidget(pie);
+    topLayout->addWidget(dirSizelbl);
 
 
     QColor *color = new QColor();
@@ -44,7 +44,6 @@ MainWindow::MainWindow(QWidget *parent) :
     fileInfolbl->setStyleSheet("background:transparent; color: white; font: 20px");
     fileInfolbl->setParent(this);
     fileInfolbl->setGeometry(700,550,200,300);
-//    ui->charts->addWidget(fileInfolbl);
     fileInfolbl->show();
 }
 
@@ -74,6 +73,9 @@ void MainWindow::onSliceClicked(QString fileName)
 
 void MainWindow::updateWindow(QString path)
 {
+    dirSizelbl->setMovie(movie);
+    dirSizelbl->show();
+    movie->start();
     ui->txtPath->setText(path);
     QDir dir(path);
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
@@ -87,15 +89,27 @@ void MainWindow::updateWindow(QString path)
     ui->DirTreeView->setRootIndex(idx);
 
     QFileInfoList fileInfoList= dir.entryInfoList();
+
+    QThread* thread = new QThread;
+    DirSizeCounter* worker = new DirSizeCounter(path);
+    worker->moveToThread(thread);
+
+    connect(worker,SIGNAL(SizeCounted(qint64)),this,SLOT(ShowDirSizelabel(qint64)));
+    connect(thread, SIGNAL (started()), worker, SLOT (process()));
+    connect(worker, SIGNAL (finished()), thread, SLOT (quit()));
+    connect(worker, SIGNAL (finished()), worker, SLOT (deleteLater()));
+    connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
+    thread->start();
+
     pie->updatePie(fileInfoList, dir.dirName());
-    dirSizelbl->setText(Worker::sizeHuman(Worker::dirSize(path)));
+
 }
 
 void MainWindow::ShowFileInfo(bool hovered, QString fileName)
 {
     QString absPath = path + "/" +fileName;
     QFileInfo fileInfo(absPath);
-    fileInfolbl->setText(fileName +"\n" + Worker::sizeHuman(pie->listOfFileSizes->value(fileName)));
+    fileInfolbl->setText(fileName +"\n" + DirSizeCounter::sizeHuman(pie->listOfFileSizes->value(fileName)));
     hovered?fileInfolbl->setVisible(true):fileInfolbl->setVisible(false);
 }
 
@@ -110,3 +124,10 @@ void MainWindow::on_btnback_clicked()
     }
 
 }
+
+void MainWindow::ShowDirSizelabel(qint64 size)
+{
+    movie->stop();
+    dirSizelbl->setText(DirSizeCounter::sizeHuman(size));
+}
+

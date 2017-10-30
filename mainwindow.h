@@ -7,6 +7,9 @@
 #include <QFileInfo>
 #include <QDebug>
 #include <QLabel>
+#include <QThread>
+#include <QFileSystemModel>
+#include <QMovie>
 #include <QFileDialog>
 #include <QFileSystemWatcher>
 #include "directorypie.h"
@@ -30,10 +33,12 @@ private slots:
     void updateWindow(QString path);
     void ShowFileInfo(bool hovered, QString fileName);
     void on_btnback_clicked();
+    void ShowDirSizelabel(qint64 size);
 
 private:
     Ui::MainWindow *ui;
     QString path;
+    QMovie *movie;
     DirectoryPie *pie;
     QLabel *fileInfolbl, *dirSizelbl ;
     QStack<QString> *pathStack;

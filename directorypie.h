@@ -4,6 +4,8 @@
 #include <QFileSystemModel>
 #include <QDebug>
 #include <QStack>
+#include <QThread>
+#include "dirsizecounter.h"
 #ifndef DIRECTORYPIE_H
 #define DIRECTORYPIE_H
 QT_CHARTS_USE_NAMESPACE

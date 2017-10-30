@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/gif">
+        <file>ajax-loader.gif</file>
+        <file>loading.gif</file>
+        <file>loading2.gif</file>
+        <file>loading3.gif</file>
+        <file>loading4.gif</file>
+        <file>loading5.gif</file>
+        <file>load.gif</file>
+    </qresource>
+</RCC>

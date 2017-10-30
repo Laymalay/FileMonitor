@@ -1,6 +1,6 @@
 #include "directorypie.h"
 #include "worker.h"
-#include <QThread>
+
 
 DirectoryPie::DirectoryPie(QChartView *parent): QChartView(parent)
 {
@@ -64,6 +64,8 @@ void DirectoryPie::PieSliceHovered(bool hovered)
     hovered?slice->setLabelColor(Qt::black):slice->setLabelColor(Qt::white);
     emit ShowFileInfoSignal(hovered, slice->label());
 }
+
+
 void DirectoryPie::clearChart()
 {
       series->clear();
