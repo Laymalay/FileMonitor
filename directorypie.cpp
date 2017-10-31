@@ -22,16 +22,16 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
 {
     clearChart();
     chart->setTitle(directoryName);
-    QThread* thread = new QThread;
     Worker* worker = new Worker(fileInfoList);
-    worker->moveToThread(thread);
-//    thread->moveToThread(thread);
-    connect(worker,SIGNAL(SliceIsReady(QString, qint64, int, QColor)),this,SLOT(AddSlice(QString, qint64, int, QColor)));
-    connect(thread, SIGNAL (started()), worker, SLOT (process()));
-    connect(worker, SIGNAL (finished()), thread, SLOT (quit()));
-    connect(worker, SIGNAL (finished()), worker, SLOT (deleteLater()));
-    connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
-    thread->start();
+    emit UpdatePieWorker(worker);
+
+//    worker->moveToThread(thread);
+//    connect(worker,SIGNAL(SliceIsReady(QString, qint64, int, QColor)),this,SLOT(AddSlice(QString, qint64, int, QColor)));
+//    connect(thread, SIGNAL (started()), worker, SLOT (process()));
+//    connect(worker, SIGNAL (finished()), thread, SLOT (quit()));
+//    connect(worker, SIGNAL (finished()), worker, SLOT (deleteLater()));
+//    connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
+//    thread->start();
 //    for(auto slice : series->slices())
 //        if (100*slice->percentage()>2.5)
 //        {
@@ -104,7 +104,11 @@ QColor DirectoryPie::getNewTone(int i, QColor color){
     int x = color.red();
     int y = color.green();
     int z = color.blue();
-
+    if (x + y + z >700){
+        x-=100;
+        y-=100;
+        z-=100;
+    }
     xx=(x+(i*30)%150);
     yy=(y+(i*30)%150);
     zz=(z+(i*30)%150);

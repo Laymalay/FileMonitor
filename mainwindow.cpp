@@ -90,16 +90,16 @@ void MainWindow::updateWindow(QString path)
 
     QFileInfoList fileInfoList= dir.entryInfoList();
 
-    QThread* thread = new QThread;
+//    QThread* thread = new QThread;
     DirSizeCounter* worker = new DirSizeCounter(path);
-    worker->moveToThread(thread);
-
-    connect(worker,SIGNAL(SizeCounted(qint64)),this,SLOT(ShowDirSizelabel(qint64)));
-    connect(thread, SIGNAL (started()), worker, SLOT (process()));
-    connect(worker, SIGNAL (finished()), thread, SLOT (quit()));
-    connect(worker, SIGNAL (finished()), worker, SLOT (deleteLater()));
-    connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
-    thread->start();
+    emit CountDirSize(worker);
+//    worker->moveToThread(thread);
+//    connect(worker,SIGNAL(SizeCounted(qint64)),this,SLOT(ShowDirSizelabel(qint64)));
+//    connect(thread, SIGNAL (started()), worker, SLOT (process()));
+//    connect(worker, SIGNAL (finished()), thread, SLOT (quit()));
+//    connect(worker, SIGNAL (finished()), worker, SLOT (deleteLater()));
+//    connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
+//    thread->start();
 
     pie->updatePie(fileInfoList, dir.dirName());
 
@@ -112,10 +112,6 @@ void MainWindow::ShowFileInfo(bool hovered, QString fileName)
     fileInfolbl->setText(fileName +"\n" + DirSizeCounter::sizeHuman(pie->listOfFileSizes->value(fileName)));
     hovered?fileInfolbl->setVisible(true):fileInfolbl->setVisible(false);
 }
-
-
-
-
 void MainWindow::on_btnback_clicked()
 {
     if (!pathStack->isEmpty()){
@@ -124,7 +120,6 @@ void MainWindow::on_btnback_clicked()
     }
 
 }
-
 void MainWindow::ShowDirSizelabel(qint64 size)
 {
     movie->stop();

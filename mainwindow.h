@@ -25,6 +25,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    DirectoryPie *pie;
     ~MainWindow();
 
 private slots:
@@ -34,12 +35,12 @@ private slots:
     void ShowFileInfo(bool hovered, QString fileName);
     void on_btnback_clicked();
     void ShowDirSizelabel(qint64 size);
-
+signals:
+    void CountDirSize(DirSizeCounter* counter);
 private:
     Ui::MainWindow *ui;
     QString path;
     QMovie *movie;
-    DirectoryPie *pie;
     QLabel *fileInfolbl, *dirSizelbl ;
     QStack<QString> *pathStack;
     QColor getRandomColor();

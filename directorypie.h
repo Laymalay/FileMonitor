@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QStack>
 #include <QThread>
+#include <worker.h>
 #include "dirsizecounter.h"
 #ifndef DIRECTORYPIE_H
 #define DIRECTORYPIE_H
@@ -35,6 +36,7 @@ private slots:
 signals:
      void ShowFileInfoSignal(bool hovered, QString fileName);
      void onSliceClickedSignal(QString fileName);
+     void UpdatePieWorker(Worker* worker);
 };
 
 #endif // DIRECTORYPIE_H

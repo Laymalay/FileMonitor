@@ -39,9 +39,6 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui
-
-DISTFILES += \
-    ajax-loader.gif
 RESOURCES  += \
     resources.qrc \
     resources.qrc
