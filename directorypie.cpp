@@ -104,7 +104,13 @@ QColor DirectoryPie::getNewTone(int i, QColor color){
     int x = color.red();
     int y = color.green();
     int z = color.blue();
+<<<<<<< HEAD
     if (x + y + z >700){
+=======
+
+    if (x + y + z >700)
+    {
+>>>>>>> 73d1b8e15afa05e241c500b0f8ac56356ffc214b
         x-=100;
         y-=100;
         z-=100;
