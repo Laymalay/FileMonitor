@@ -28,13 +28,14 @@ private:
     void clearChart();
     QColor getNewTone(int i, QColor color);
 
-private slots:
+public slots:
      void AddSlice(QString fileName, qint64 size, int i, QColor color);
      void onSliceClicked();
      void PieSliceHovered(bool hovered);
 signals:
      void ShowFileInfoSignal(bool hovered, QString fileName);
      void onSliceClickedSignal(QString fileName);
+     void GiveNewTask(QFileInfoList _fileInfoList);
 };
 
 #endif // DIRECTORYPIE_H

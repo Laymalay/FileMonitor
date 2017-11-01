@@ -26,6 +26,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+     DirectoryPie *pie;
 
 private slots:
     void on_btnBrowse_clicked();
@@ -39,7 +40,6 @@ private:
     Ui::MainWindow *ui;
     QString path;
     QMovie *movie;
-    DirectoryPie *pie;
     QLabel *fileInfolbl, *dirSizelbl ;
     QStack<QString> *pathStack;
     QColor getRandomColor();
