@@ -38,12 +38,7 @@ HEADERS += \
     dirsizecounter.h \
     workerthread.h \
     worker.h
-
 FORMS += \
         mainwindow.ui
-<<<<<<< HEAD
-=======
-
->>>>>>> Threads
 RESOURCES  += \
     resources.qrc
