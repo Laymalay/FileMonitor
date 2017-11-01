@@ -27,6 +27,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     DirectoryPie *pie;
     ~MainWindow();
+     DirectoryPie *pie;
 
 private slots:
     void on_btnBrowse_clicked();

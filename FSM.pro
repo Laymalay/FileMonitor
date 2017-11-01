@@ -28,17 +28,22 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     directorypie.cpp \
-    worker.cpp \
-    dirsizecounter.cpp
+    dirsizecounter.cpp \
+    workerthread.cpp \
+    worker.cpp
 
 HEADERS += \
         mainwindow.h \
     directorypie.h \
-    worker.h \
-    dirsizecounter.h
+    dirsizecounter.h \
+    workerthread.h \
+    worker.h
 
 FORMS += \
         mainwindow.ui
+<<<<<<< HEAD
+=======
+
+>>>>>>> Threads
 RESOURCES  += \
-    resources.qrc \
     resources.qrc

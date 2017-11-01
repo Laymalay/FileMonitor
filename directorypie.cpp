@@ -22,10 +22,12 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
 {
     clearChart();
     chart->setTitle(directoryName);
-    Worker* worker = new Worker(fileInfoList);
-    emit UpdatePieWorker(worker);
-
+    emit GiveNewTask(fileInfoList);
+    qDebug()<<"give it!";
+//    QThread* thread = new QThread;
+//    Worker* worker = new Worker(fileInfoList);
 //    worker->moveToThread(thread);
+////    thread->moveToThread(thread);
 //    connect(worker,SIGNAL(SliceIsReady(QString, qint64, int, QColor)),this,SLOT(AddSlice(QString, qint64, int, QColor)));
 //    connect(thread, SIGNAL (started()), worker, SLOT (process()));
 //    connect(worker, SIGNAL (finished()), thread, SLOT (quit()));
@@ -104,13 +106,8 @@ QColor DirectoryPie::getNewTone(int i, QColor color){
     int x = color.red();
     int y = color.green();
     int z = color.blue();
-<<<<<<< HEAD
-    if (x + y + z >700){
-=======
-
     if (x + y + z >700)
     {
->>>>>>> 73d1b8e15afa05e241c500b0f8ac56356ffc214b
         x-=100;
         y-=100;
         z-=100;
