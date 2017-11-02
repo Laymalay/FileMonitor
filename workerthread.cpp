@@ -1,15 +1,15 @@
 #include "workerthread.h"
 
 
-WorkerThread::WorkerThread()
-{
+WorkerThread::WorkerThread(QThread *parent): QThread(parent){
+
 }
 
 void WorkerThread::GetNewTask(QFileInfoList fileInfoList)
 {
    qDebug()<<"got it!";
    _fileInfoList = fileInfoList;
-    run();
+   run();
 
 }
 void WorkerThread::run(){
@@ -21,8 +21,9 @@ void WorkerThread::run(){
         totalSize+=size;
         emit SizeProgress(totalSize);
         }
-    emit finished();
     exec();
+    qDebug()<<"finishing";
+    emit finished();
     }
 
 

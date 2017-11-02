@@ -6,7 +6,7 @@ class WorkerThread : public QThread
 {
      Q_OBJECT
 public:
-    WorkerThread();
+    WorkerThread(QThread *parent = 0);
     void run() override;
 signals:
     void SliceIsReady(QString fileName, qint64 size, int i, QColor color);

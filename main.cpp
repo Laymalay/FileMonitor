@@ -15,8 +15,8 @@ int main(int argc, char *argv[])
 
     QObject::connect(w.pie, SIGNAL(GiveNewTask(QFileInfoList)), workerThread, SLOT(GetNewTask(QFileInfoList)));
     QObject::connect(workerThread, &WorkerThread::SliceIsReady, w.pie, &DirectoryPie::AddSlice);
-    QObject::connect(workerThread, &WorkerThread::finished, workerThread, &QObject::deleteLater);
     QObject::connect(workerThread, &WorkerThread::SizeProgress, &w, &MainWindow::ShowDirSizelabel);
-//    workerThread->start();
+    QObject::connect(workerThread, &WorkerThread::finished, workerThread, &QObject::deleteLater);
+    workerThread->start(QThread::IdlePriority);
     return a.exec();
 }
