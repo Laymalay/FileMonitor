@@ -14,7 +14,7 @@
 #include <QFileDialog>
 #include <QFileSystemWatcher>
 #include "directorypie.h"
-
+#include "worker.h"
 
 namespace Ui {
 class MainWindow;

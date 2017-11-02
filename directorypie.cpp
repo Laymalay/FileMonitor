@@ -23,16 +23,7 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
     chart->setTitle(directoryName);
     emit GiveNewTask(fileInfoList);
     qDebug()<<"give it!";
-//    QThread* thread = new QThread;
-//    Worker* worker = new Worker(fileInfoList);
-//    worker->moveToThread(thread);
-////    thread->moveToThread(thread);
-//    connect(worker,SIGNAL(SliceIsReady(QString, qint64, int, QColor)),this,SLOT(AddSlice(QString, qint64, int, QColor)));
-//    connect(thread, SIGNAL (started()), worker, SLOT (process()));
-//    connect(worker, SIGNAL (finished()), thread, SLOT (quit()));
-//    connect(worker, SIGNAL (finished()), worker, SLOT (deleteLater()));
-//    connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
-//    thread->start();
+
 //    for(auto slice : series->slices())
 //        if (100*slice->percentage()>2.5)
 //        {
