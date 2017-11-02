@@ -44,6 +44,7 @@ void DirectoryPie::onSliceClicked()
 {
     QPieSlice* slice = ((QPieSlice*)sender());
     emit onSliceClickedSignal(slice->label());
+    emit AbortWorker();
 }
 void DirectoryPie::PieSliceHovered(bool hovered)
 {
@@ -63,6 +64,7 @@ void DirectoryPie::clearChart()
       series->clear();
       listOfColors->clear();
       listOfFileSizes->clear();
+
 }
 
 void DirectoryPie::AddSlice(QString fileName, qint64 size, int i,QColor color)

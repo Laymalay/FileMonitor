@@ -30,6 +30,7 @@ public:
     ~MainWindow();
 public slots:
     void ShowDirSizelabel(qint64 size);
+    void StopLoadingAnimation();
 private slots:
     void on_btnBrowse_clicked();
     void onSliceClicked(QString fileName);
@@ -43,7 +44,7 @@ private:
     Ui::MainWindow *ui;
     QString path;
     QMovie *movie;
-    QLabel *fileInfolbl, *dirSizelbl ;
+    QLabel *fileInfolbl, *dirSizelbl, *loadinglbl;
     QStack<QString> *pathStack;
     QColor getRandomColor();
     QColor getNewTone(int i, QColor color);

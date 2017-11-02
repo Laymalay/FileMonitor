@@ -15,16 +15,17 @@ int main(int argc, char *argv[])
     QThread* thread = new QThread;
     Worker* worker = new Worker();
     qRegisterMetaType<QFileInfoList>("QFileInfoList");
-    QObject::connect(w.pie, SIGNAL(GiveNewTask(QFileInfoList)), worker, SLOT(GetNewTask(QFileInfoList)));
-    QObject::connect(worker,SIGNAL(SliceIsReady(QString, qint64, int, QColor)),w.pie,SLOT(AddSlice(QString, qint64, int, QColor)));
+    QObject::connect(w.pie,&DirectoryPie::AbortWorker, worker, &Worker::Abort);
+    QObject::connect(w.pie,&DirectoryPie::GiveNewTask, worker, &Worker::GetNewTask);
+    QObject::connect(worker,&Worker::SliceIsReady,w.pie,&DirectoryPie::AddSlice);
+    QObject::connect(worker,&Worker::finish,&w,&MainWindow::StopLoadingAnimation);
     QObject::connect(worker, &Worker::SizeProgress, &w, &MainWindow::ShowDirSizelabel);
-    QObject::connect(worker, SIGNAL (finished()), thread, SLOT (quit()));
-    QObject::connect(worker, SIGNAL (finished()), worker, SLOT (deleteLater()));
-    QObject::connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
+    QObject::connect(worker, &Worker::finished, thread, &QThread::quit);
+    QObject::connect(worker, &Worker::finished, worker, &Worker::deleteLater);
+    QObject::connect(thread, &QThread::finished, thread, &QThread::deleteLater);
     worker->moveToThread(thread);
     thread->moveToThread(thread);
     thread->start();
-
 
 
 //    WorkerThread *workerThread = new WorkerThread();

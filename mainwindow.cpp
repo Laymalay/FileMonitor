@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    movie = new QMovie(":/gif/loading4.gif");
+    movie = new QMovie(":/gif/load2.gif");
     pie = new DirectoryPie();
     pie->setStyleSheet("background:transparent;");
     ui->charts->addWidget(pie);
@@ -21,8 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     dirSizelbl->setMaximumSize(100,100);
 
 
+
+
     QHBoxLayout* topLayout = new QHBoxLayout(pie);
-    ui->charts->addLayout(topLayout);
     topLayout->addWidget(dirSizelbl);
 
 
@@ -41,10 +42,17 @@ MainWindow::MainWindow(QWidget *parent) :
     fileInfolbl = new QLabel();
     fileInfolbl->setVisible(false);
     fileInfolbl->setAlignment(Qt::AlignCenter);
-    fileInfolbl->setStyleSheet("background:transparent; color: white; font: 20px");
-    fileInfolbl->setParent(this);
+    fileInfolbl->setStyleSheet("background:transparent; color: white; font: 10px");
+    fileInfolbl->setParent(pie);
 
-    fileInfolbl->setGeometry(800,0,200,300);
+    loadinglbl = new QLabel();
+    loadinglbl->setAlignment(Qt::AlignCenter);
+    loadinglbl->setStyleSheet("background:transparent; color: white; font: 20px");
+    loadinglbl->setMaximumSize(50,50);
+    loadinglbl->setParent(dirSizelbl);
+    loadinglbl->show();
+    loadinglbl->setGeometry(dirSizelbl->width()/2-30,dirSizelbl->height()/2+10,100,100);
+    fileInfolbl->setGeometry(pie->width()/2,pie->height()+10,200,300);
     fileInfolbl->show();
 }
 
@@ -58,6 +66,7 @@ void MainWindow::on_btnBrowse_clicked()
     path = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                              ".", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     updateWindow(path);
+
 }
 
 
@@ -74,9 +83,9 @@ void MainWindow::onSliceClicked(QString fileName)
 
 void MainWindow::updateWindow(QString path)
 {
-//   dirSizelbl->setMovie(movie);
-//    dirSizelbl->show();
-//    movie->start();
+    loadinglbl->setMovie(movie);
+    loadinglbl->show();
+    movie->start();
     ui->txtPath->setText(path);
     QDir dir(path);
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
@@ -122,7 +131,9 @@ void MainWindow::on_btnback_clicked()
 }
 void MainWindow::ShowDirSizelabel(qint64 size)
 {
-//    movie->stop();
     dirSizelbl->setText(DirSizeCounter::sizeHuman(size));
 }
-
+void MainWindow::StopLoadingAnimation(){
+    movie->stop();
+    loadinglbl->setVisible(false);
+}

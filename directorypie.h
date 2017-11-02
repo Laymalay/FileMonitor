@@ -35,6 +35,7 @@ public slots:
      void onSliceClicked();
      void PieSliceHovered(bool hovered);
 signals:
+     void AbortWorker();
      void ShowFileInfoSignal(bool hovered, QString fileName);
      void onSliceClickedSignal(QString fileName);
      void GiveNewTask(QFileInfoList _fileInfoList);
