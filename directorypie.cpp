@@ -1,5 +1,4 @@
 #include "directorypie.h"
-#include "worker.h"
 
 
 DirectoryPie::DirectoryPie(QChartView *parent): QChartView(parent)

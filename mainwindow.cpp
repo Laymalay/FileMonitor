@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "directorypie.h"
 #include "ui_mainwindow.h"
-#include "worker.h"
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -43,7 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
     fileInfolbl->setAlignment(Qt::AlignCenter);
     fileInfolbl->setStyleSheet("background:transparent; color: white; font: 20px");
     fileInfolbl->setParent(this);
-    fileInfolbl->setGeometry(700,550,200,300);
+
+    fileInfolbl->setGeometry(800,0,200,300);
     fileInfolbl->show();
 }
 
@@ -73,9 +74,9 @@ void MainWindow::onSliceClicked(QString fileName)
 
 void MainWindow::updateWindow(QString path)
 {
-    dirSizelbl->setMovie(movie);
-    dirSizelbl->show();
-    movie->start();
+//   dirSizelbl->setMovie(movie);
+//    dirSizelbl->show();
+//    movie->start();
     ui->txtPath->setText(path);
     QDir dir(path);
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
@@ -91,8 +92,8 @@ void MainWindow::updateWindow(QString path)
     QFileInfoList fileInfoList= dir.entryInfoList();
 
 //    QThread* thread = new QThread;
-    DirSizeCounter* worker = new DirSizeCounter(path);
-    emit CountDirSize(worker);
+//    DirSizeCounter* worker = new DirSizeCounter(path);
+//    emit CountDirSize(worker);
 //    worker->moveToThread(thread);
 //    connect(worker,SIGNAL(SizeCounted(qint64)),this,SLOT(ShowDirSizelabel(qint64)));
 //    connect(thread, SIGNAL (started()), worker, SLOT (process()));
@@ -100,7 +101,6 @@ void MainWindow::updateWindow(QString path)
 //    connect(worker, SIGNAL (finished()), worker, SLOT (deleteLater()));
 //    connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
 //    thread->start();
-
     pie->updatePie(fileInfoList, dir.dirName());
 
 }
@@ -122,7 +122,7 @@ void MainWindow::on_btnback_clicked()
 }
 void MainWindow::ShowDirSizelabel(qint64 size)
 {
-    movie->stop();
+//    movie->stop();
     dirSizelbl->setText(DirSizeCounter::sizeHuman(size));
 }
 

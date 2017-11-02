@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QLabel>
 #include <QThread>
+#include <QApplication>
 #include <QFileSystemModel>
 #include <QMovie>
 #include <QFileDialog>
@@ -27,15 +28,15 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     DirectoryPie *pie;
     ~MainWindow();
-     DirectoryPie *pie;
-
+public slots:
+    void ShowDirSizelabel(qint64 size);
 private slots:
     void on_btnBrowse_clicked();
     void onSliceClicked(QString fileName);
     void updateWindow(QString path);
     void ShowFileInfo(bool hovered, QString fileName);
     void on_btnback_clicked();
-    void ShowDirSizelabel(qint64 size);
+
 signals:
     void CountDirSize(DirSizeCounter* counter);
 private:

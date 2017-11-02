@@ -1,3 +1,6 @@
+#ifndef DIRECTORYPIE_H
+#define DIRECTORYPIE_H
+
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
@@ -5,10 +8,8 @@
 #include <QDebug>
 #include <QStack>
 #include <QThread>
-#include <worker.h>
 #include "dirsizecounter.h"
-#ifndef DIRECTORYPIE_H
-#define DIRECTORYPIE_H
+
 QT_CHARTS_USE_NAMESPACE
 
 

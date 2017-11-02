@@ -29,15 +29,13 @@ SOURCES += \
         mainwindow.cpp \
     directorypie.cpp \
     dirsizecounter.cpp \
-    workerthread.cpp \
-    worker.cpp
+    workerthread.cpp
 
 HEADERS += \
         mainwindow.h \
     directorypie.h \
     dirsizecounter.h \
-    workerthread.h \
-    worker.h
+    workerthread.h
 FORMS += \
         mainwindow.ui
 RESOURCES  += \

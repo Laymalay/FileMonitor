@@ -11,6 +11,7 @@ public:
 signals:
     void SliceIsReady(QString fileName, qint64 size, int i, QColor color);
     void finished();
+    void SizeProgress(qint64 size);
 public slots:
     void GetNewTask(QFileInfoList _fileInfoList);
 private:
