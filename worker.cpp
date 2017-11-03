@@ -25,6 +25,8 @@ void Worker::process()
     qint64 totalSize = 0;
     QColor color = DirectoryPie::getRandomColor();
     for (int i=0; i < _fileInfoList.size(); i++){
+        if (_fileInfoList.size()>100)
+            QThread::msleep(100);
         if (abort){
             break;
         }

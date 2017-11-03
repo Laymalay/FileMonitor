@@ -20,6 +20,8 @@ DirectoryPie::DirectoryPie(QChartView *parent): QChartView(parent)
 void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
 {
     clearChart();
+    //TODO:  label
+    chart->setTitle("____________________");
     chart->setTitle(directoryName);
     emit GiveNewTask(fileInfoList);
     qDebug()<<"give it!";
