@@ -1,10 +1,7 @@
 #include "dirsizecounter.h"
 
-DirSizeCounter::DirSizeCounter(QString filePath)
-{
-    _filePath = filePath;
+DirSizeCounter::DirSizeCounter(){
 }
-
 qint64 DirSizeCounter::getFileSize(QString filePath){
     QFileInfo fileInfo(filePath);
     if (fileInfo.isFile()){
@@ -15,16 +12,6 @@ qint64 DirSizeCounter::getFileSize(QString filePath){
         return DirSizeCounter::dirSize(filePath);
     }
 }
-
-
-
-void DirSizeCounter::process()
-{
-    qint64 size = getFileSize(_filePath);
-    emit SizeCounted(size);
-    emit finished();
-}
-
 qint64 DirSizeCounter::dirSize(QString dirPath)
 {
     qint64 totalSize = 0;
@@ -62,5 +49,4 @@ QString DirSizeCounter::sizeHuman(qint64 size)
 
 DirSizeCounter::~DirSizeCounter()
 {
-
 }

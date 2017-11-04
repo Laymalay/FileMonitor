@@ -24,14 +24,6 @@ void DirectoryPie::updatePie(QFileInfoList fileInfoList, QString directoryName)
     chart->setTitle("____________________");
     chart->setTitle(directoryName);
     emit GiveNewTask(fileInfoList);
-    qDebug()<<"give it!";
-
-//    for(auto slice : series->slices())
-//        if (100*slice->percentage()>2.5)
-//        {
-//            slice->setLabelPosition(QPieSlice::LabelInsideNormal);
-//            slice->setLabelVisible();
-//        }
 }
 
 DirectoryPie::~DirectoryPie()

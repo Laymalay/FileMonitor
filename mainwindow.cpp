@@ -14,18 +14,13 @@ MainWindow::MainWindow(QWidget *parent) :
     pie->setStyleSheet("background:transparent;");
     ui->charts->addWidget(pie);
 
-
     dirSizelbl = new QLabel();
     dirSizelbl->setAlignment(Qt::AlignCenter);
     dirSizelbl->setStyleSheet("background:transparent; color: white; font: 20px");
     dirSizelbl->setMaximumSize(100,100);
 
-
-
-
     QHBoxLayout* topLayout = new QHBoxLayout(pie);
     topLayout->addWidget(dirSizelbl);
-
 
     QColor *color = new QColor();
     color->setRgb((rand() % 255),(rand() % 255),(rand() % 255));
@@ -66,7 +61,6 @@ void MainWindow::on_btnBrowse_clicked()
     path = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                              ".", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     updateWindow(path);
-
 }
 
 
@@ -99,17 +93,6 @@ void MainWindow::updateWindow(QString path)
     ui->DirTreeView->setRootIndex(idx);
 
     QFileInfoList fileInfoList= dir.entryInfoList();
-
-//    QThread* thread = new QThread;
-//    DirSizeCounter* worker = new DirSizeCounter(path);
-//    emit CountDirSize(worker);
-//    worker->moveToThread(thread);
-//    connect(worker,SIGNAL(SizeCounted(qint64)),this,SLOT(ShowDirSizelabel(qint64)));
-//    connect(thread, SIGNAL (started()), worker, SLOT (process()));
-//    connect(worker, SIGNAL (finished()), thread, SLOT (quit()));
-//    connect(worker, SIGNAL (finished()), worker, SLOT (deleteLater()));
-//    connect(thread, SIGNAL (finished()), thread, SLOT (deleteLater()));
-//    thread->start();
     pie->updatePie(fileInfoList, dir.dirName());
 
 }
@@ -124,6 +107,7 @@ void MainWindow::ShowFileInfo(bool hovered, QString fileName)
 void MainWindow::on_btnback_clicked()
 {
     if (!pathStack->isEmpty()){
+        emit AbortWorker();
         path = pathStack->pop();
         updateWindow(path);
     }
@@ -135,5 +119,9 @@ void MainWindow::ShowDirSizelabel(qint64 size)
 }
 void MainWindow::StopLoadingAnimation(){
     movie->stop();
+    for(auto slice : pie->series->slices())
+        if (100*slice->percentage()<2.5){
+            slice->setLabelVisible(false);
+        }
     loadinglbl->setVisible(false);
 }

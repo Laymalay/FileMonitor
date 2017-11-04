@@ -18,14 +18,14 @@ class DirectoryPie: public QChartView
     Q_OBJECT
 
 public:
-     DirectoryPie(QChartView *parent = 0);
+     static QColor getRandomColor();
      void updatePie(QFileInfoList fileInfoList, QString directoryName);
+     DirectoryPie(QChartView *parent = 0);
      QMap<QString,qint64> *listOfFileSizes;
      QMap<QString,QColor> *listOfColors;
-     static QColor getRandomColor();
+     QPieSeries *series;
     ~DirectoryPie();
 private:
-    QPieSeries *series;
     QChart *chart;
     void clearChart();
     QColor getNewTone(int i, QColor color);

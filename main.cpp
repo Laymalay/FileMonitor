@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "workerthread.h"
 #include <QApplication>
 
 
@@ -16,6 +15,7 @@ int main(int argc, char *argv[])
     Worker* worker = new Worker();
     qRegisterMetaType<QFileInfoList>("QFileInfoList");
     QObject::connect(w.pie,&DirectoryPie::AbortWorker, worker, &Worker::Abort);
+    QObject::connect(&w,&MainWindow::AbortWorker, worker, &Worker::Abort);
     QObject::connect(w.pie,&DirectoryPie::GiveNewTask, worker, &Worker::GetNewTask);
     QObject::connect(worker,&Worker::SliceIsReady,w.pie,&DirectoryPie::AddSlice);
     QObject::connect(worker,&Worker::finish,&w,&MainWindow::StopLoadingAnimation);

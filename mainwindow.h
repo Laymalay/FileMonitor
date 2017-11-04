@@ -39,6 +39,7 @@ private slots:
     void on_btnback_clicked();
 
 signals:
+    void AbortWorker();
     void CountDirSize(DirSizeCounter* counter);
 private:
     Ui::MainWindow *ui;
